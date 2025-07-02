@@ -29,15 +29,20 @@ class CountriesViewController: UIViewController {
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor
+                equalTo: view.topAnchor
             ),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
         searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search countries"
         definesPresentationContext = true
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         Task {
             do {
                 countries = try await serviceManager.execute(
@@ -80,7 +85,7 @@ extension CountriesViewController: UITableViewDataSource {
     }
 }
 
-extension CountriesViewController: UISearchResultsUpdating {
+extension CountriesViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else {
             filteredCountries = countries
@@ -95,6 +100,12 @@ extension CountriesViewController: UISearchResultsUpdating {
                 || $0.capital.lowercased().contains(searchText.lowercased())
         }
         tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        filteredCountries = countries
+        tableView.reloadData()
+        searchBar.resignFirstResponder() 
     }
 
 }
