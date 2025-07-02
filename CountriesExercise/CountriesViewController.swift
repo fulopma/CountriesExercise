@@ -5,28 +5,35 @@
 //  Created by Marcell Fulop on 7/1/25.
 //
 
-import UIKit
 import NetworkLayer
+import UIKit
 
 class CountriesViewController: UIViewController {
     private var countries: [Country] = []
     private var filteredCountries: [Country] = []
     private let tableView = UITableView()
     private let serviceManager = ServiceManager()
-    private let searchController = UISearchController(searchResultsController: nil)
+    private let searchController = UISearchController(
+        searchResultsController: nil
+    )
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
-       
-        tableView.register(CountryCell.self, forCellReuseIdentifier: "CountryCell")
+
+        tableView.register(
+            CountryCell.self,
+            forCellReuseIdentifier: "CountryCell"
+        )
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor
+            ),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
         searchController.searchResultsUpdater = self
         definesPresentationContext = true
@@ -39,22 +46,27 @@ class CountriesViewController: UIViewController {
                 )
                 filteredCountries = countries
                 tableView.reloadData()
-            }
-            catch {
+            } catch {
                 print("\(error)")
             }
         }
-                
+
     }
 }
 
 extension CountriesViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
+        -> Int {
         return filteredCountries.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CountryCell") as? CountryCell else {
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
+        -> UITableViewCell {
+        guard
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "CountryCell"
+            ) as? CountryCell
+        else {
             return UITableViewCell()
         }
         let country = filteredCountries[indexPath.row]
@@ -78,12 +90,11 @@ extension CountriesViewController: UISearchResultsUpdating {
             filteredCountries = countries
             return
         }
-        filteredCountries = countries.filter { $0.name.lowercased().contains(searchText.lowercased()) ||
-            $0.capital.lowercased().contains(searchText.lowercased())
+        filteredCountries = countries.filter {
+            $0.name.lowercased().contains(searchText.lowercased())
+                || $0.capital.lowercased().contains(searchText.lowercased())
         }
         tableView.reloadData()
     }
-    
-   
-}
 
+}
