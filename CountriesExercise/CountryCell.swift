@@ -28,7 +28,7 @@ class CountryCell: UITableViewCell {
         capitalLabel.font = .systemFont(ofSize: 17)
         return capitalLabel
     }()
-    func configure(name: String, region: String, code: String, capital: String){
+    func configure(name: String, region: String, code: String, capital: String) {
         nameRegionLabel.text = "\(name), \(region)"
         codeLabel.text = code
         capitalLabel.text = capital
@@ -48,5 +48,5 @@ class CountryCell: UITableViewCell {
             ])
         codeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
-    
+
 }

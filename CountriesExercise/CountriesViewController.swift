@@ -33,7 +33,7 @@ class CountriesViewController: UIViewController {
             ),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
@@ -101,11 +101,10 @@ extension CountriesViewController: UISearchResultsUpdating, UISearchBarDelegate 
         }
         tableView.reloadData()
     }
-    
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         filteredCountries = countries
         tableView.reloadData()
         searchBar.resignFirstResponder() 
     }
-
 }
