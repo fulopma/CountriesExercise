@@ -105,6 +105,6 @@ extension CountriesViewController: UISearchResultsUpdating, UISearchBarDelegate 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         filteredCountries = countries
         tableView.reloadData()
-        searchBar.resignFirstResponder() 
+        searchBar.resignFirstResponder()
     }
 }
