@@ -67,10 +67,9 @@ extension CountriesViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
         -> UITableViewCell {
-        guard
-            let cell = tableView.dequeueReusableCell(
+        guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "CountryCell"
-            ) as? CountryCell
+        ) as? CountryCell
         else {
             return UITableViewCell()
         }
